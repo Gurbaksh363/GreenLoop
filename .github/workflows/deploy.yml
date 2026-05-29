@@ -39,7 +39,12 @@ jobs:
               git reset --hard origin/main
             fi
 
-            # 3. Build the new Docker image locally on EC2
+            # 3. Create .env file if it is missing on the server
+            if [ ! -f ".env" ]; then
+              cp .env.example .env
+            fi
+
+            # 4. Build the new Docker image locally on EC2
             docker build -t greenloop-app .
 
             # 4. Stop and remove the old running container if it exists
@@ -56,3 +61,9 @@ jobs:
               -v /var/www/eco-waste-management-platform/database:/var/www/html/database \
               -v /var/www/eco-waste-management-platform/storage:/var/www/html/storage \
               greenloop-app
+
+            # 6. Generate the Laravel App Key inside the container to prevent HTTP 500 errors
+            docker exec greenloop-container php artisan key:generate
+
+            # 7. Run database migrations to ensure tables exist
+            docker exec greenloop-container php artisan migrate --force
