@@ -1,0 +1,50 @@
+name: CI/CD Pipeline - Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      # Triggers the workflow every time code is pushed to the main branch
+      - main
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code from the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up SSH Key and Deploy to EC2
+      - name: SSH and Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}          # Your EC2 Public IP address
+          username: ${{ secrets.EC2_USERNAME }}  # Typically 'ubuntu' or 'ec2-user'
+          key: ${{ secrets.EC2_SSH_KEY }}        # Your private SSH Key (.pem)
+          port: 22
+          script: |
+            # 1. Navigate to the project directory on EC2
+            cd /var/www/eco-waste-management-platform || exit
+
+            # 2. Pull the latest code from GitHub
+            git pull origin main
+
+            # 3. Build the new Docker image locally on EC2
+            docker build -t greenloop-app .
+
+            # 4. Stop and remove the old running container if it exists
+            docker stop greenloop-container || true
+            docker rm greenloop-container || true
+
+            # 5. Run the new container with SQLite persistence and port mapping
+            # This maps port 80 (standard HTTP) of EC2 to port 80 of the container.
+            # It also mounts a persistent database folder so SQLite data is never lost.
+            docker run -d \
+              -p 80:80 \
+              --name greenloop-container \
+              --restart unless-stopped \
+              -v /var/www/eco-waste-management-platform/database:/var/www/html/database \
+              -v /var/www/eco-waste-management-platform/storage:/var/www/html/storage \
+              greenloop-app

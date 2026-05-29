@@ -1,0 +1,293 @@
+<style>
+    .nav-link-dashboard {
+        position: relative;
+        color: #6b7280; /* text-gray-500 */
+        font-weight: 700;
+        font-size: 0.85rem;
+        transition: color 0.3s ease;
+        padding-bottom: 4px;
+    }
+    .nav-link-dashboard::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -6px;
+        left: 50%;
+        background-color: #3E8B3A;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+    .nav-link-dashboard:hover::after, .nav-link-dashboard.active::after {
+        width: 100%;
+    }
+    .nav-link-dashboard:hover, .nav-link-dashboard.active {
+        color: #3E8B3A !important;
+    }
+</style>
+
+<nav class="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-50 pt-3 pb-2 select-none">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-14">
+            
+            <!-- Left side (Logo & Main Links) -->
+            <div class="flex items-center gap-10">
+                <!-- Logo -->
+                <div class="shrink-0 flex items-center">
+                    <a href="{{ url('/') }}" class="flex items-center">
+                        <img src="{{ asset('icon-landscap.svg') }}" alt="Logo" class="h-7 md:h-8 w-auto object-contain select-none pointer-events-none">
+                    </a>
+                </div>
+
+                <!-- Desktop Links -->
+                <div class="hidden sm:flex sm:items-center ml-4" style="gap: 1.75rem;">
+                    @auth
+                        @php
+                            $unreadMsgs = \App\Models\Message::where('receiver_id', Auth::id())->whereNull('read_at')->count();
+                        @endphp
+                        @if(Auth::user()->role === 'user')
+                            <a href="{{ route('dashboard') }}" class="nav-link-dashboard {{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
+                            <a href="{{ route('services.list') }}" class="nav-link-dashboard {{ request()->routeIs('services.list') ? 'active' : '' }}">Browse Services</a>
+                            <a href="{{ route('bookings.my') }}" class="nav-link-dashboard {{ request()->routeIs('bookings.my') ? 'active' : '' }}">My Bookings</a>
+                            <a href="{{ route('customer.messages.index') }}" class="nav-link-dashboard {{ request()->routeIs('customer.messages.*') ? 'active' : '' }} flex items-center gap-1.5">
+                                Messages
+                                @if($unreadMsgs > 0)
+                                    <span class="bg-[#3E8B3A] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">{{ $unreadMsgs }}</span>
+                                @else
+                                    <span class="bg-gray-150 text-gray-400 text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">0</span>
+                                @endif
+                            </a>
+                            <a href="{{ route('public.blog.index') }}" class="nav-link-dashboard {{ request()->routeIs('public.blog.*') ? 'active' : '' }}">Blog</a>
+                        @elseif(Auth::user()->role === 'admin')
+                            <a href="{{ route('admin.dashboard') }}" class="nav-link-dashboard {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a>
+                            <a href="{{ route('services.list') }}" class="nav-link-dashboard {{ request()->routeIs('services.list') ? 'active' : '' }}">Services</a>
+                            <a href="{{ route('public.blog.index') }}" class="nav-link-dashboard {{ request()->routeIs('public.blog.*') ? 'active' : '' }}">Blog</a>
+                        @elseif(Auth::user()->role === 'provider')
+                            <a href="{{ route('provider.dashboard') }}" class="nav-link-dashboard {{ request()->routeIs('provider.dashboard') ? 'active' : '' }}">Dashboard</a>
+                            <a href="{{ route('services.list') }}" class="nav-link-dashboard {{ request()->routeIs('services.list') ? 'active' : '' }}">Services</a>
+                            <a href="{{ route('public.blog.index') }}" class="nav-link-dashboard {{ request()->routeIs('public.blog.*') ? 'active' : '' }}">Blog</a>
+                        @endif
+                    @else
+                        <a href="{{ url('/') }}" class="nav-link-dashboard {{ request()->is('/') ? 'active' : '' }}">Home</a>
+                        <a href="{{ route('services.list') }}" class="nav-link-dashboard {{ request()->routeIs('services.list') ? 'active' : '' }}">Services</a>
+                        <a href="{{ route('public.blog.index') }}" class="nav-link-dashboard {{ request()->routeIs('public.blog.*') ? 'active' : '' }}">Blog</a>
+                    @endauth
+                </div>
+            </div>
+
+            <!-- Right side (Search, Icons, Profile) -->
+            <div class="flex items-center gap-4">
+                
+                @auth
+
+
+                    <!-- Icons -->
+                    <div class="flex items-center gap-2 mr-2">
+                        <!-- Notification Bell -->
+                        <div class="relative nav-dropdown-container">
+                            <button id="notificationBtn" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-600 transition-colors relative">
+                                <i class="fa-regular fa-bell text-lg"></i>
+                                <span id="notificationBadge" class="absolute -top-1 -right-1 bg-[#3E8B3A] text-white text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white hidden"></span>
+                            </button>
+                            
+                            <!-- Notification Dropdown -->
+                            <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50 transform origin-top-right transition-all">
+                                <div class="p-4 flex items-center justify-between border-b border-gray-100">
+                                    <h3 class="font-bold text-gray-900">Notifications</h3>
+                                    <a href="{{ route('notifications.index') }}" class="text-xs font-semibold text-green-600 hover:text-green-800">View All</a>
+                                </div>
+                                <div id="notificationList" class="max-h-80 overflow-y-auto">
+                                    <div class="p-6 text-center text-sm text-gray-500">Loading notifications...</div>
+                                </div>
+                                <form action="{{ route('notifications.mark-all-as-read') }}" method="POST" class="border-t border-gray-100">
+                                    @csrf
+                                    <button type="submit" class="w-full p-3 text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors text-center">
+                                        Mark All as Read
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Messages Icon -->
+                        <a href="{{ Auth::user()->role === 'provider' ? route('messages.index') : route('customer.messages.index') }}" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-600 transition-colors relative">
+                            <i class="fa-regular fa-comment-dots text-lg"></i>
+                            @if($unreadMsgs > 0)
+                                <span class="absolute -top-1 -right-1 bg-[#3E8B3A] text-white text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">{{ $unreadMsgs }}</span>
+                            @else
+                                <span class="absolute -top-1 -right-1 bg-gray-150 text-gray-400 text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">0</span>
+                            @endif
+                        </a>
+                    </div>
+
+                    <!-- Profile Dropdown -->
+                    <div class="relative nav-dropdown-container">
+                        <button id="profileBtn" class="flex items-center gap-2 transition-colors">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold overflow-hidden border border-green-200 shrink-0">
+                                @if(Auth::user()->profile_photo_path)
+                                    <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="w-full h-full object-cover">
+                                @else
+                                    {{ substr(Auth::user()->name, 0, 1) }}
+                                @endif
+                            </div>
+                            <div class="hidden md:flex flex-col items-start mr-1 text-left">
+                                <span class="text-sm font-bold text-gray-900 leading-none">{{ Auth::user()->name }}</span>
+                                <span class="text-[10px] text-gray-500 mt-0.5">{{ ucfirst(Auth::user()->role) }}</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+                        </button>
+                        
+                        <!-- Profile Menu -->
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50 transform origin-top-right transition-all">
+                            <div class="py-1">
+                                @if(Auth::user()->role === 'admin')
+                                <a href="{{ route('admin.profile.edit') }}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-green-600 transition-colors flex items-center gap-2">
+                                    <i class="fa-regular fa-user w-4"></i> Profile
+                                </a>
+                                @elseif(Auth::user()->role === 'provider')
+                                <a href="{{ route('provider.profile.edit') }}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-green-600 transition-colors flex items-center gap-2">
+                                    <i class="fa-regular fa-user w-4"></i> Profile
+                                </a>
+                                @else
+                                <a href="{{ route('profile.edit') }}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-green-600 transition-colors flex items-center gap-2">
+                                    <i class="fa-regular fa-user w-4"></i> Profile
+                                </a>
+                                @endif
+                                <hr class="my-1 border-gray-100">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2">
+                                        <i class="fa-solid fa-arrow-right-from-bracket w-4"></i> Log Out
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="flex items-center gap-3">
+                        <a href="{{ route('login') }}" class="text-sm font-semibold text-gray-700 hover:text-gray-900 px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors">Log in</a>
+                        <a href="{{ route('register') }}" class="text-sm font-semibold text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition-colors shadow-sm">Sign up</a>
+                    </div>
+                @endauth
+                
+                <!-- Mobile Menu Button -->
+                <button class="sm:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 transition-colors">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Dropdown Toggle Logic
+        const dropdownContainers = document.querySelectorAll('.nav-dropdown-container');
+        
+        dropdownContainers.forEach(container => {
+            const btn = container.querySelector('button');
+            const dropdown = container.querySelector('div[id$="Dropdown"]');
+            
+            if(btn && dropdown) {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Close all others first
+                    document.querySelectorAll('div[id$="Dropdown"]').forEach(d => {
+                        if(d !== dropdown) d.classList.add('hidden');
+                    });
+                    // Toggle current
+                    dropdown.classList.toggle('hidden');
+                });
+            }
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', () => {
+            document.querySelectorAll('div[id$="Dropdown"]').forEach(d => {
+                d.classList.add('hidden');
+            });
+        });
+
+        // Notification Logic
+        @auth
+            loadNotifications();
+            updateUnreadCount();
+            
+            setInterval(updateUnreadCount, 10000);
+
+            const notifBtn = document.getElementById('notificationBtn');
+            if(notifBtn) {
+                notifBtn.addEventListener('click', loadNotifications);
+            }
+
+            function loadNotifications() {
+                fetch('{{ route("notifications.recent") }}', {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    if (response.status === 401) {
+                        return { notifications: [] };
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const notificationList = document.getElementById('notificationList');
+                    
+                    if (!data.notifications || data.notifications.length === 0) {
+                        notificationList.innerHTML = '<div class="p-6 text-center text-sm text-gray-500">No notifications</div>';
+                        return;
+                    }
+
+                    let html = '';
+                    data.notifications.forEach(notification => {
+                        const readClass = notification.read_at ? 'bg-white' : 'bg-green-50';
+                        const newBadge = notification.read_at ? '' : '<span class="w-2 h-2 rounded-full bg-green-500 mt-1 shrink-0"></span>';
+                        
+                        html += `
+                            <a href="${notification.action_url || '#'}" class="block p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors ${readClass}">
+                                <div class="flex justify-between items-start gap-3">
+                                    <div>
+                                        <p class="text-sm font-semibold text-gray-900">${notification.title}</p>
+                                        <p class="text-xs text-gray-600 mt-0.5 line-clamp-2">${notification.message}</p>
+                                        <p class="text-[10px] text-gray-400 mt-1">${new Date(notification.created_at).toLocaleString()}</p>
+                                    </div>
+                                    ${newBadge}
+                                </div>
+                            </a>
+                        `;
+                    });
+                    
+                    notificationList.innerHTML = html;
+                })
+                .catch(error => console.error('Error loading notifications:', error));
+            }
+
+            function updateUnreadCount() {
+                fetch('{{ route("notifications.unread-count") }}', {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    if (response.status === 401) {
+                        return { unread_count: 0 };
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const badge = document.getElementById('notificationBadge');
+                    if (data && data.unread_count > 0) {
+                        badge.textContent = data.unread_count;
+                        badge.classList.remove('hidden');
+                    } else {
+                        badge.classList.add('hidden');
+                    }
+                })
+                .catch(error => console.error('Error updating unread count:', error));
+            }
+        @endauth
+    });
+</script>
