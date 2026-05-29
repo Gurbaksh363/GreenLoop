@@ -71,3 +71,9 @@ jobs:
 
             # 7. Run database migrations to ensure tables exist
             docker exec greenloop-container php artisan migrate --force
+
+            # 8. Link storage folder for public image access
+            docker exec greenloop-container php artisan storage:link || true
+
+            # 9. Seed the database with default data (like the Admin user)
+            docker exec greenloop-container php artisan db:seed --force || true
