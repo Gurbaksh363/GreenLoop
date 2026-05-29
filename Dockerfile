@@ -39,8 +39,8 @@ COPY . .
 # 7.5 Install PHP dependencies (This creates the vendor/ folder!)
 RUN composer install --no-dev --optimize-autoloader
 
-# 7.6 Install Node dependencies and build the frontend assets (Vite)
-RUN npm install && npm run build
+# 7.6 Install Node dependencies, build the frontend assets (Vite), and clean up heavy files
+RUN npm install && npm run build && rm -rf node_modules
 
 # 8. Set the correct file permissions so Apache (www-data) can read/write Laravel cache & storage
 RUN chown -R www-data:www-data /var/www/html \
