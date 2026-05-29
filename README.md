@@ -87,3 +87,4 @@ This platform connects users with composting experts and waste management servic
 ## License
 
 This project is for academic purposes.
+Gurbaksh Kaur
