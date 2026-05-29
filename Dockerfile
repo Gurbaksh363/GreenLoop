@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     libsqlite3-dev \
+    nodejs \
+    npm \
     && docker-php-ext-install pdo pdo_sqlite gd zip bcmath \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -36,6 +38,9 @@ COPY . .
 
 # 7.5 Install PHP dependencies (This creates the vendor/ folder!)
 RUN composer install --no-dev --optimize-autoloader
+
+# 7.6 Install Node dependencies and build the frontend assets (Vite)
+RUN npm install && npm run build
 
 # 8. Set the correct file permissions so Apache (www-data) can read/write Laravel cache & storage
 RUN chown -R www-data:www-data /var/www/html \
