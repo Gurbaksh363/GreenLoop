@@ -60,6 +60,7 @@ jobs:
               --restart unless-stopped \
               -v /var/www/eco-waste-management-platform/database:/var/www/html/database \
               -v /var/www/eco-waste-management-platform/storage:/var/www/html/storage \
+              -v /var/www/eco-waste-management-platform/.env:/var/www/html/.env \
               greenloop-app
 
             # 6. Generate the Laravel App Key inside the container to prevent HTTP 500 errors
