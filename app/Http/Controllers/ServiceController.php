@@ -56,7 +56,7 @@ class ServiceController extends Controller
         $paths = [];
         for ($i = 0; $i < 5; $i++) {
             if (isset($uploaded[$i]) && $uploaded[$i]->isValid()) {
-                $paths[] = $uploaded[$i]->store('services', 'public');
+                $paths[] = $uploaded[$i]->store('services');
             }
         }
         $data['image_path'] = !empty($paths) ? json_encode($paths) : null;
@@ -118,7 +118,7 @@ class ServiceController extends Controller
             // Check if a new file was uploaded for this slot
             if (isset($newUploaded[$i]) && $newUploaded[$i]->isValid()) {
                 // Save the new file
-                $finalPaths[] = $newUploaded[$i]->store('services', 'public');
+                $finalPaths[] = $newUploaded[$i]->store('services');
                 
                 // If there was an old image in this slot, delete it from storage
                 $oldPathInSlot = $existingImages[$i] ?? null;

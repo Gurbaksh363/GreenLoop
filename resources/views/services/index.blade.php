@@ -194,7 +194,7 @@
                                         <div class="flex items-center gap-3.5">
                                             <div class="w-13 h-13 rounded-xl bg-gray-50 border border-gray-100 shrink-0 overflow-hidden flex items-center justify-center relative select-none">
                                                 @if ($service->image_path)
-                                                    <img src="{{ asset('storage/' . $service->image_path) }}" class="w-full h-full object-cover" />
+                                                    <img src="{{ Storage::url($service->image_path) }}" class="w-full h-full object-cover" />
                                                 @else
                                                     <div class="w-full h-full bg-gradient-to-br from-[#E2E4DE] to-[#C2C9BD] flex items-center justify-center">
                                                         <svg class="w-6 h-6 text-provider-green/60" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">

@@ -86,7 +86,7 @@
                         
                         <!-- Left Avatar -->
                         <div class="relative shrink-0 select-none">
-                            <img src="{{ $conv->profile_picture ? asset('storage/' . $conv->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($conv->name) . '&background=fefefe&color=40852b' }}" class="w-11 h-11 rounded-full object-cover border border-gray-100/60">
+                            <img src="{{ $conv->profile_picture ? Storage::url($conv->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($conv->name) . '&background=fefefe&color=40852b' }}" class="w-11 h-11 rounded-full object-cover border border-gray-100/60">
                         </div>
 
                         <!-- Middle Details content -->

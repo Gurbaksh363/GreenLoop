@@ -134,7 +134,7 @@
                             <!-- Selected file information and tiny thumbnail (No stretching!) -->
                             <div id="file-preview-info" class="{{ $post->featured_image ? 'flex' : 'hidden' }} items-center gap-4 p-3 bg-gray-50 border border-gray-150 rounded-xl">
                                 <div class="w-16 h-12 rounded-lg overflow-hidden border border-gray-200 shrink-0 bg-white">
-                                    <img id="image-preview" class="w-full h-full object-cover" src="{{ $post->featured_image ? asset('storage/' . $post->featured_image) : '' }}" alt="Thumbnail">
+                                    <img id="image-preview" class="w-full h-full object-cover" src="{{ $post->featured_image ? Storage::url($post->featured_image) : '' }}" alt="Thumbnail">
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p id="preview-filename" class="text-xs font-bold text-gray-700 truncate">{{ $post->featured_image ? 'Current Image' : 'No file selected' }}</p>
@@ -158,7 +158,7 @@
                             <!-- Small Card Preview -->
                             <div class="w-full border border-gray-200 rounded-xl overflow-hidden shadow-sm bg-white mb-4">
                                 <div class="relative aspect-video bg-gray-100 flex items-center justify-center overflow-hidden">
-                                    <img id="sidebar-preview-image" src="{{ $post->featured_image ? asset('storage/' . $post->featured_image) : 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' }}" class="w-full h-full object-cover">
+                                    <img id="sidebar-preview-image" src="{{ $post->featured_image ? Storage::url($post->featured_image) : 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' }}" class="w-full h-full object-cover">
                                     <span id="sidebar-preview-category" class="absolute top-3 left-3 bg-[#1A4D2E] text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">{{ $post->category }}</span>
                                 </div>
                                 <div class="p-3.5 space-y-2">
@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fileInput.addEventListener('change', function() { if (this.files.length) handleFile(this.files[0]); });
 
     const hasOriginalImage = {{ $post->featured_image ? 'true' : 'false' }};
-    const originalImageUrl = "{{ $post->featured_image ? asset('storage/' . $post->featured_image) : '' }}";
+    const originalImageUrl = "{{ $post->featured_image ? Storage::url($post->featured_image) : '' }}";
 
     if (btnRemoveImage) {
         btnRemoveImage.addEventListener('click', () => {

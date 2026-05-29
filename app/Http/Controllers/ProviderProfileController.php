@@ -39,11 +39,11 @@ class ProviderProfileController extends Controller
         ];
 
         if ($request->hasFile('profile_picture')) {
-            $data['profile_picture'] = $request->file('profile_picture')->store('profiles', 'public');
+            $data['profile_picture'] = $request->file('profile_picture')->store('profiles');
         }
 
         if ($request->hasFile('verification_document')) {
-            $data['verification_document'] = $request->file('verification_document')->store('documents', 'public');
+            $data['verification_document'] = $request->file('verification_document')->store('documents');
         }
 
         $user->update($data);

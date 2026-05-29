@@ -148,7 +148,7 @@
                                     <!-- Image Thumbnail -->
                                     <div class="w-14 h-14 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shrink-0 flex items-center justify-center select-none">
                                         @if ($booking->service->image_path)
-                                            <img src="{{ asset('storage/' . $booking->service->image_path) }}" class="w-full h-full object-cover">
+                                            <img src="{{ Storage::url($booking->service->image_path) }}" class="w-full h-full object-cover">
                                         @else
                                             <div class="w-full h-full bg-[#E2E4DE] flex items-center justify-center select-none">
                                                 <i class="fa-solid fa-leaf text-provider-green text-lg"></i>
@@ -186,7 +186,7 @@
                                 <div class="flex items-center gap-3 md:border-l md:border-r border-gray-100 px-0 md:px-6 shrink-0 select-none">
                                     <div class="w-8.5 h-8.5 rounded-full bg-[#E2E4DE] overflow-hidden flex items-center justify-center text-gray-600 font-bold text-xs border border-gray-100">
                                         @if ($booking->customer->profile_photo_path)
-                                            <img src="{{ asset('storage/' . $booking->customer->profile_photo_path) }}" class="w-full h-full object-cover">
+                                            <img src="{{ Storage::url($booking->customer->profile_photo_path) }}" class="w-full h-full object-cover">
                                         @else
                                             {{ substr($booking->customer->name, 0, 1) }}
                                         @endif

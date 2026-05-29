@@ -334,7 +334,7 @@
                 @forelse($latestPosts as $post)
                     <a href="{{ route('public.blog.show', $post->slug) }}" class="flex items-center gap-3 group">
                         <div class="w-14 h-14 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shrink-0 select-none">
-                            <img src="{{ $post->featured_image ? asset('storage/' . $post->featured_image) : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=150&q=80' }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img src="{{ $post->featured_image ? Storage::url($post->featured_image) : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=150&q=80' }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         </div>
                         <div class="min-w-0">
                             <h4 class="font-extrabold text-xs text-gray-900 leading-snug group-hover:text-[#3E8B3A] transition-colors line-clamp-2">

@@ -60,7 +60,7 @@
 
         <!-- Profile Info -->
         <div class="flex items-center gap-3 pl-1">
-            <img src="{{ $provider->profile_picture ? asset('storage/' . $provider->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($provider->name) . '&background=eef6ea&color=40852b' }}" alt="{{ $provider->name }}" class="w-9 h-9 rounded-full object-cover select-none">
+            <img src="{{ $provider->profile_picture ? Storage::url($provider->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($provider->name) . '&background=eef6ea&color=40852b' }}" alt="{{ $provider->name }}" class="w-9 h-9 rounded-full object-cover select-none">
             <div class="hidden sm:block text-left select-none">
                 <p class="font-bold text-[13px] leading-tight text-gray-900 mb-0">{{ $provider->name }}</p>
                 <p class="text-[11px] text-gray-400 font-medium mt-0.5 mb-0">Service Provider</p>

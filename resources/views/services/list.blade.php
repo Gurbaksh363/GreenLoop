@@ -230,7 +230,7 @@
                                         <div class="h-40 w-full relative overflow-hidden bg-gray-50 shrink-0 select-none">
                                             <a href="{{ route('services.show', $service) }}" class="block w-full h-full">
                                                 @if ($imgPath)
-                                                    <img src="{{ asset('storage/' . $imgPath) }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="{{ $service->name }}">
+                                                    <img src="{{ Storage::url($imgPath) }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="{{ $service->name }}">
                                                 @else
                                                     <div class="w-full h-full bg-gradient-to-br from-[#E2E8E4] to-[#B8C8BD] flex flex-col items-center justify-center relative select-none">
                                                         <i class="fa-solid fa-leaf text-[#2E6F40]/40 text-3xl mb-1"></i>
@@ -278,7 +278,7 @@
                                             <!-- Provider details row -->
                                             <div class="flex items-center gap-2 mb-3 select-none">
                                                 <!-- Avatar image -->
-                                                <img src="{{ $service->user->profile_picture ? asset('storage/' . $service->user->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($service->user->name) . '&background=E8F5E9&color=3E8B3A' }}" class="w-8 h-8 rounded-full object-cover border border-gray-100 shrink-0">
+                                                <img src="{{ $service->user->profile_picture ? Storage::url($service->user->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($service->user->name) . '&background=E8F5E9&color=3E8B3A' }}" class="w-8 h-8 rounded-full object-cover border border-gray-100 shrink-0">
                                                 
                                                 <div class="min-w-0 flex-1">
                                                     <!-- Provider business name with Verified badges -->

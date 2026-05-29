@@ -129,7 +129,7 @@
         <div class="space-y-4">
             @foreach ($popularPosts as $article)
                 <a href="{{ route('public.blog.show', $article->slug) }}" class="flex gap-4 group items-start">
-                    <img src="{{ $article->featured_image ? asset('storage/' . $article->featured_image) : 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80' }}" class="w-16 h-16 rounded-lg object-cover flex-shrink-0 bg-gray-100">
+                    <img src="{{ $article->featured_image ? Storage::url($article->featured_image) : 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80' }}" class="w-16 h-16 rounded-lg object-cover flex-shrink-0 bg-gray-100">
                     <div class="min-w-0 flex-1">
                         <div class="text-sm font-bold text-gray-900 group-hover:text-green-700 transition-colors line-clamp-2 leading-snug">{{ $article->title }}</div>
                         <div class="text-[11px] text-gray-500 mt-1">{{ $article->published_at ? $article->published_at->format('M d, Y') : $article->created_at->format('M d, Y') }}</div>

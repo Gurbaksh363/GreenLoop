@@ -117,7 +117,7 @@
                                     <label class="block text-[10px] font-bold text-gray-600 uppercase tracking-wider mb-1.5">Profile Picture</label>
                                     <div class="flex items-center gap-4">
                                         <div class="relative group w-16 h-16 shrink-0 rounded-full overflow-hidden border-2 border-provider-green/20 bg-gray-50">
-                                            <img id="avatar-preview" src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&background=eef6ea&color=40852b' }}" alt="Profile Picture" class="w-full h-full object-cover">
+                                            <img id="avatar-preview" src="{{ $user->profile_picture ? Storage::url($user->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&background=eef6ea&color=40852b' }}" alt="Profile Picture" class="w-full h-full object-cover">
                                         </div>
                                         <div class="flex-1">
                                             <input type="file" name="profile_picture" id="profile_picture" accept="image/*" class="hidden" onchange="previewAvatar(this)">
@@ -139,7 +139,7 @@
                                                 <div class="truncate flex-1 font-medium">
                                                     Document uploaded
                                                 </div>
-                                                <a href="{{ asset('storage/' . $user->verification_document) }}" target="_blank" class="text-provider-green hover:text-provider-green-dark font-bold underline whitespace-nowrap">
+                                                <a href="{{ Storage::url($user->verification_document) }}" target="_blank" class="text-provider-green hover:text-provider-green-dark font-bold underline whitespace-nowrap">
                                                     View File
                                                 </a>
                                             </div>

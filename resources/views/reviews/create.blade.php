@@ -23,7 +23,7 @@
             <div class="bg-[#F8F9FA] border border-gray-100 p-4.5 rounded-2xl flex items-center gap-4 select-none">
                 <div class="w-12 h-12 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shrink-0 select-none">
                     @if ($booking->service->image_path)
-                        <img src="{{ asset('storage/' . $booking->service->image_path) }}" class="w-full h-full object-cover">
+                        <img src="{{ Storage::url($booking->service->image_path) }}" class="w-full h-full object-cover">
                     @else
                         <div class="w-full h-full bg-[#E2E4DE] flex items-center justify-center text-lg text-emerald-800 font-bold select-none">
                             <i class="fa-solid fa-seedling text-emerald-800 text-lg"></i>

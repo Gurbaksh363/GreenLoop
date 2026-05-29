@@ -124,7 +124,7 @@
                         <button id="profileBtn" class="flex items-center gap-2 transition-colors">
                             <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold overflow-hidden border border-green-200 shrink-0">
                                 @if(Auth::user()->profile_photo_path)
-                                    <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="w-full h-full object-cover">
+                                    <img src="{{ Storage::url(Auth::user()->profile_photo_path) }}" class="w-full h-full object-cover">
                                 @else
                                     {{ substr(Auth::user()->name, 0, 1) }}
                                 @endif

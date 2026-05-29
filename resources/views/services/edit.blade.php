@@ -322,7 +322,7 @@
                                          ondrop="handleDrop(event, {{ $i }})">
                                         @if ($imgPath)
                                             <svg class="w-3.5 h-3.5 text-provider-green group-hover:scale-110 transition-transform hidden" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
-                                            <img id="thumb_{{ $i }}" src="{{ asset('storage/' . $imgPath) }}" class="absolute inset-0 w-full h-full object-cover" />
+                                            <img id="thumb_{{ $i }}" src="{{ Storage::url($imgPath) }}" class="absolute inset-0 w-full h-full object-cover" />
                                         @else
                                             <svg class="w-3.5 h-3.5 text-provider-green group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
                                             <img id="thumb_{{ $i }}" class="absolute inset-0 w-full h-full object-cover hidden" />
@@ -366,7 +366,7 @@
                                             <rect x="86" y="82" width="4" height="6" fill="#D97706" />
                                             <path d="M84 82 C84 80 86 78 88 78 C90 78 92 80 92 82 Z" fill="#40852b" />
                                         </svg>
-                                        <img id="preview_uploaded_img" src="{{ asset('storage/' . $service->image_path) }}" class="w-full h-full object-cover" />
+                                        <img id="preview_uploaded_img" src="{{ Storage::url($service->image_path) }}" class="w-full h-full object-cover" />
                                     @else
                                         <svg id="store_svg" class="w-full h-full" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="60" cy="60" r="45" fill="#eef6ea" />

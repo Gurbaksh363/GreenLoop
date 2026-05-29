@@ -31,7 +31,7 @@
     </div>
     
     @if($post->featured_image)
-        <img src="{{ asset('storage/' . $post->featured_image) }}" class="rounded-2xl my-8 w-full object-cover" style="max-height: 450px;">
+        <img src="{{ Storage::url($post->featured_image) }}" class="rounded-2xl my-8 w-full object-cover" style="max-height: 450px;">
     @else
         <img src="https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="rounded-2xl my-8 w-full object-cover" style="max-height: 450px;">
     @endif

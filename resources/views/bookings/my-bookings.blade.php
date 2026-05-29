@@ -78,7 +78,7 @@
                     <div class="flex items-center gap-4.5">
                         <div class="w-16 h-16 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shrink-0 select-none flex items-center justify-center">
                             @if ($booking->service->image_path)
-                                <img src="{{ asset('storage/' . $booking->service->image_path) }}" class="w-full h-full object-cover">
+                                <img src="{{ Storage::url($booking->service->image_path) }}" class="w-full h-full object-cover">
                             @else
                                 <div class="w-full h-full bg-[#E2E4DE] flex items-center justify-center select-none">
                                     <i class="fa-solid fa-leaf text-lg text-emerald-800"></i>

@@ -211,7 +211,7 @@ class AdminDashboardController extends Controller
         }
 
         if ($request->hasFile('profile_picture')) {
-            $data['profile_picture'] = $request->file('profile_picture')->store('profiles', 'public');
+            $data['profile_picture'] = $request->file('profile_picture')->store('profiles');
         }
 
         $user->update($data);

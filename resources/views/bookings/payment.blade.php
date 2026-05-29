@@ -116,7 +116,7 @@
                     <div class="bg-[#F8F9FA]/60 border border-gray-100 p-4.5 rounded-xl flex gap-3.5 items-center select-none">
                         <div class="w-14 h-11.5 rounded-lg overflow-hidden bg-gray-50 border border-gray-100 shrink-0">
                             @if ($service->image_path)
-                                <img src="{{ asset('storage/' . $service->image_path) }}" class="w-full h-full object-cover" />
+                                <img src="{{ Storage::url($service->image_path) }}" class="w-full h-full object-cover" />
                             @else
                                 <div class="w-full h-full bg-gradient-to-br from-[#E2E4DE] to-[#C2C9BD] flex items-center justify-center">
                                     <i class="fa-regular fa-image text-gray-400 text-xs"></i>

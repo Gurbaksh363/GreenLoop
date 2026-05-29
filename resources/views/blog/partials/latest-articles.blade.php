@@ -7,7 +7,7 @@
         @foreach ($posts as $post)
             <a href="{{ route('public.blog.show', $post->slug) }}" class="bg-white border border-gray-100 rounded-xl p-3 flex flex-col hover:shadow-md transition-shadow group cursor-pointer block text-left">
                 <div class="relative overflow-hidden rounded-lg mb-3">
-                    <img src="{{ $post->featured_image ? asset('storage/' . $post->featured_image) : 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' }}" class="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-500">
+                    <img src="{{ $post->featured_image ? Storage::url($post->featured_image) : 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' }}" class="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-500">
                 </div>
                 <span class="text-green-theme text-[10px] font-semibold uppercase mb-1 bg-green-50 self-start px-2 py-0.5 rounded">{{ $post->category }}</span>
                 <h4 class="font-bold text-sm text-gray-900 mb-3 flex-grow group-hover:text-green-theme transition-colors">{{ $post->title }}</h4>

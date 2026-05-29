@@ -27,7 +27,7 @@
                     <div class="space-y-3">
                         <div class="h-80 w-full rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 select-none">
                             @if ($service->image_path)
-                                <img id="service_cover_image" src="{{ asset('storage/' . $service->image_path) }}" class="w-full h-full object-cover" alt="{{ $service->name }}">
+                                <img id="service_cover_image" src="{{ Storage::url($service->image_path) }}" class="w-full h-full object-cover" alt="{{ $service->name }}">
                             @else
                                 <div class="w-full h-full bg-gradient-to-br from-[#E2E4DE] to-[#C2C9BD] flex flex-col items-center justify-center">
                                     <svg class="w-16 h-16 text-[#609953]/60 mb-2" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
@@ -42,9 +42,9 @@
                         @if (count($service->images) > 1)
                             <div class="flex flex-wrap gap-3 select-none">
                                 @foreach ($service->images as $index => $imgPath)
-                                    <div onclick="changeCoverImage('{{ asset('storage/' . $imgPath) }}', this)" 
+                                    <div onclick="changeCoverImage('{{ Storage::url($imgPath) }}', this)" 
                                          class="w-20 h-16 rounded-xl overflow-hidden border-2 {{ $index === 0 ? 'border-[#3E8B3A]' : 'border-gray-100' }} bg-gray-50 cursor-pointer select-none transition-all hover:scale-105 active:scale-95 duration-200 gallery-thumb">
-                                        <img src="{{ asset('storage/' . $imgPath) }}" class="w-full h-full object-cover" />
+                                        <img src="{{ Storage::url($imgPath) }}" class="w-full h-full object-cover" />
                                     </div>
                                 @endforeach
                             </div>
@@ -86,7 +86,7 @@
                         <div class="flex items-center gap-3.5">
                             <div class="w-11 h-11 rounded-full bg-[#E8F5E9] overflow-hidden flex items-center justify-center text-[#3E8B3A] font-bold text-sm border border-[#C1DDC6]/30">
                                 @if ($service->user->profile_photo_path)
-                                    <img src="{{ asset('storage/' . $service->user->profile_photo_path) }}" class="w-full h-full object-cover">
+                                    <img src="{{ Storage::url($service->user->profile_photo_path) }}" class="w-full h-full object-cover">
                                 @else
                                     {{ substr($service->user->name, 0, 1) }}
                                 @endif
@@ -217,7 +217,7 @@
                                     <div class="flex items-center gap-3">
                                         <div class="w-8.5 h-8.5 rounded-full bg-[#E2E4DE] overflow-hidden flex items-center justify-center text-gray-600 font-bold text-xs">
                                             @if ($review->user->profile_photo_path)
-                                                <img src="{{ asset('storage/' . $review->user->profile_photo_path) }}" class="w-full h-full object-cover">
+                                                <img src="{{ Storage::url($review->user->profile_photo_path) }}" class="w-full h-full object-cover">
                                             @else
                                                 {{ substr($review->user->name, 0, 1) }}
                                             @endif

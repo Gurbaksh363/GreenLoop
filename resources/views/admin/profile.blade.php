@@ -47,7 +47,7 @@
                     <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.015)] text-center flex flex-col items-center justify-center">
                         <div class="relative group w-24 h-24 rounded-full overflow-hidden border-4 border-green-50 shadow-sm mb-4 bg-[#E8F5E9]">
                             @if($user->profile_picture)
-                                <img id="avatar-preview" src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture" class="w-full h-full object-cover">
+                                <img id="avatar-preview" src="{{ Storage::url($user->profile_picture) }}" alt="Profile Picture" class="w-full h-full object-cover">
                             @else
                                 <div id="avatar-monogram" class="w-full h-full text-[#2E6F40] font-black text-3xl flex items-center justify-center select-none">
                                     {{ strtoupper(substr($user->name, 0, 1)) }}

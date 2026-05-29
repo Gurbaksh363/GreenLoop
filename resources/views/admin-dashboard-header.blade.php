@@ -24,7 +24,7 @@
         <!-- Profile details -->
         <a href="{{ route('admin.profile.edit') }}" class="flex items-center gap-3 hover:opacity-85 transition-opacity group">
             @if(Auth::user()->profile_picture)
-                <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="{{ Auth::user()->name }}" class="w-9 h-9 rounded-full object-cover group-hover:scale-105 transition-transform">
+                <img src="{{ Storage::url(Auth::user()->profile_picture) }}" alt="{{ Auth::user()->name }}" class="w-9 h-9 rounded-full object-cover group-hover:scale-105 transition-transform">
             @else
                 <div class="w-9 h-9 rounded-full bg-[#E8F5E9] text-[#2E6F40] font-extrabold text-[13px] flex items-center justify-center group-hover:scale-105 transition-transform">
                     {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}

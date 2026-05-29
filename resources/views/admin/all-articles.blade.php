@@ -56,7 +56,7 @@
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-3">
                                             @if($article->featured_image)
-                                                <img src="{{ asset('storage/' . $article->featured_image) }}" class="w-10 h-7 rounded object-cover border border-gray-100">
+                                                <img src="{{ Storage::url($article->featured_image) }}" class="w-10 h-7 rounded object-cover border border-gray-100">
                                             @else
                                                 <div class="w-10 h-7 rounded bg-gray-100 flex items-center justify-center border border-gray-100">
                                                     <i class="fa-regular fa-image text-gray-400 text-xs"></i>

@@ -6,7 +6,7 @@
     </div>
     <div class="bg-green-tint border border-green-50 rounded-2xl p-4 flex flex-col md:flex-row gap-6 hover:shadow-md transition-shadow">
         <div class="w-full md:w-1/2">
-            <img src="{{ $featuredPost->featured_image ? asset('storage/' . $featuredPost->featured_image) : 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }}" alt="{{ $featuredPost->title }}" class="w-full h-64 object-cover rounded-xl shadow-sm">
+            <img src="{{ $featuredPost->featured_image ? Storage::url($featuredPost->featured_image) : 'https://images.unsplash.com/photo-1592476579628-9d41b0b5fe8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }}" alt="{{ $featuredPost->title }}" class="w-full h-64 object-cover rounded-xl shadow-sm">
         </div>
         <div class="w-full md:w-1/2 flex flex-col justify-center">
             <span class="text-green-theme text-xs font-semibold uppercase tracking-wider mb-2">{{ $featuredPost->category }}</span>

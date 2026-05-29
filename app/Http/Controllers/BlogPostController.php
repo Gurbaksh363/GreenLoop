@@ -50,7 +50,7 @@ class BlogPostController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('featured_image')) {
-            $imagePath = $request->file('featured_image')->store('blog', 'public');
+            $imagePath = $request->file('featured_image')->store('blog');
         }
 
         BlogPost::create([
@@ -134,7 +134,7 @@ class BlogPostController extends Controller
                 Storage::disk('public')->delete($post->featured_image);
             }
             // Store new image
-            $post->featured_image = $request->file('featured_image')->store('blog', 'public');
+            $post->featured_image = $request->file('featured_image')->store('blog');
         }
 
         $post->title = $validated['title'];
@@ -193,7 +193,7 @@ class BlogPostController extends Controller
 
         // Get popular articles for the sidebar
         $popularPosts = BlogPost::where('status', 'published')
-            ->where('visibility', 'public')
+            ->where('visibility')
             ->where('id', '!=', $post->id)
             ->inRandomOrder()
             ->take(4)

@@ -70,7 +70,7 @@
                             <!-- Right: Documents & Moderation Actions -->
                             <div class="flex items-center gap-3 shrink-0 lg:self-center">
                                 @if($provider->verification_document)
-                                    <a href="{{ asset('storage/' . $provider->verification_document) }}" target="_blank"
+                                    <a href="{{ Storage::url($provider->verification_document) }}" target="_blank"
                                        class="px-4 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 text-xs font-bold rounded-xl transition-all inline-flex items-center gap-1.5">
                                         <i class="fa-solid fa-file-pdf"></i> View Documents
                                     </a>

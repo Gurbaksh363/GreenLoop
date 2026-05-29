@@ -14,7 +14,7 @@ class PublicBlogController extends Controller
 
         // Get the featured post (most recent one marked as featured, matching category/search if selected)
         $featuredPostQuery = BlogPost::where('status', 'published')
-            ->where('visibility', 'public')
+            ->where('visibility')
             ->where('is_featured', true);
 
         if ($category) {
@@ -33,7 +33,7 @@ class PublicBlogController extends Controller
         // If no featured post, just grab the most recent one (matching category/search if selected)
         if (!$featuredPost) {
             $fallbackQuery = BlogPost::where('status', 'published')
-                ->where('visibility', 'public');
+                ->where('visibility');
 
             if ($category) {
                 $fallbackQuery->where('category', $category);
@@ -51,7 +51,7 @@ class PublicBlogController extends Controller
 
         // Get latest articles excluding the featured one (matching category/search if selected)
         $postsQuery = BlogPost::where('status', 'published')
-            ->where('visibility', 'public')
+            ->where('visibility')
             ->latest('published_at');
 
         if ($category) {
@@ -80,14 +80,14 @@ class PublicBlogController extends Controller
 
         // Get popular articles
         $popularPosts = BlogPost::where('status', 'published')
-            ->where('visibility', 'public')
+            ->where('visibility')
             ->inRandomOrder()
             ->take(4)
             ->get();
 
         // Calculate dynamic category counts
         $categoryCounts = BlogPost::where('status', 'published')
-            ->where('visibility', 'public')
+            ->where('visibility')
             ->select('category')
             ->selectRaw('count(*) as total')
             ->groupBy('category')
@@ -95,7 +95,7 @@ class PublicBlogController extends Controller
             ->toArray();
 
         $totalArticlesCount = BlogPost::where('status', 'published')
-            ->where('visibility', 'public')
+            ->where('visibility')
             ->count();
 
         $allParams = [];
@@ -143,12 +143,12 @@ class PublicBlogController extends Controller
     {
         $post = BlogPost::where('slug', $slug)
             ->where('status', 'published')
-            ->where('visibility', 'public')
+            ->where('visibility')
             ->firstOrFail();
 
         // Get popular articles for the sidebar
         $popularPosts = BlogPost::where('status', 'published')
-            ->where('visibility', 'public')
+            ->where('visibility')
             ->where('id', '!=', $post->id)
             ->inRandomOrder()
             ->take(4)

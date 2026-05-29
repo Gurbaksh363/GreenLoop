@@ -54,13 +54,13 @@
 
                             @if(!empty($imgPaths))
                                 <div class="relative h-96 bg-gray-50">
-                                    <img id="main-service-img" src="{{ asset('storage/' . $imgPaths[0]) }}" alt="{{ $service->name }}" class="w-full h-full object-cover">
+                                    <img id="main-service-img" src="{{ Storage::url($imgPaths[0]) }}" alt="{{ $service->name }}" class="w-full h-full object-cover">
                                     
                                     @if(count($imgPaths) > 1)
                                         <div class="absolute bottom-4 left-4 right-4 flex gap-2 overflow-x-auto py-2">
                                             @foreach($imgPaths as $index => $path)
-                                                <button type="button" onclick="document.getElementById('main-service-img').src = '{{ asset('storage/' . $path) }}'" class="w-16 h-12 rounded-lg border-2 border-white hover:border-[#2E6F40] overflow-hidden shrink-0 transition-all shadow-sm">
-                                                    <img src="{{ asset('storage/' . $path) }}" class="w-full h-full object-cover">
+                                                <button type="button" onclick="document.getElementById('main-service-img').src = '{{ Storage::url($path) }}'" class="w-16 h-12 rounded-lg border-2 border-white hover:border-[#2E6F40] overflow-hidden shrink-0 transition-all shadow-sm">
+                                                    <img src="{{ Storage::url($path) }}" class="w-full h-full object-cover">
                                                 </button>
                                             @endforeach
                                         </div>
@@ -205,7 +205,7 @@
                             <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wide border-b border-gray-50 pb-2.5">Service Provider</h3>
                             
                             <div class="flex items-center gap-3">
-                                <img src="{{ $service->user->profile_picture ? asset('storage/' . $service->user->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($service->user->name) . '&background=E8F5E9&color=3E8B3A' }}" class="w-12 h-12 rounded-full object-cover border border-gray-100 shrink-0">
+                                <img src="{{ $service->user->profile_picture ? Storage::url($service->user->profile_picture) : 'https://ui-avatars.com/api/?name=' . urlencode($service->user->name) . '&background=E8F5E9&color=3E8B3A' }}" class="w-12 h-12 rounded-full object-cover border border-gray-100 shrink-0">
                                 <div class="min-w-0 flex-1">
                                     <h4 class="text-xs font-extrabold text-gray-900 truncate">{{ $service->user->business_name ?? $service->user->name }}</h4>
                                     

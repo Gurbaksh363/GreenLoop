@@ -73,7 +73,7 @@
                                 <div class="flex items-center gap-3">
                                     <div class="w-9 h-9 rounded-full bg-[#E2E4DE] overflow-hidden flex items-center justify-center text-gray-600 font-bold text-xs border border-gray-100 select-none">
                                         @if ($review->user->profile_photo_path)
-                                            <img src="{{ asset('storage/' . $review->user->profile_photo_path) }}" class="w-full h-full object-cover">
+                                            <img src="{{ Storage::url($review->user->profile_photo_path) }}" class="w-full h-full object-cover">
                                         @else
                                             {{ substr($review->user->name, 0, 1) }}
                                         @endif
