@@ -10,10 +10,9 @@ storage/framework/sessions/*
 storage/framework/testing/*
 storage/framework/views/*
 storage/logs/*
+storage/app/*
 database/*.sqlite
-.env
-.env.backup
-.env.production
+# (Removed .env so it can be copied into the container during build)
 .phpunit.result.cache
 docker-compose*.yml
 README.md
