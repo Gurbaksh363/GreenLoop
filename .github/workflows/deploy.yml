@@ -28,8 +28,16 @@ jobs:
             # 1. Navigate to the project directory on EC2
             cd /var/www/eco-waste-management-platform || exit
 
-            # 2. Pull the latest code from GitHub
-            git pull origin main
+            # 2. Pull the latest code from GitHub (handles both fresh and existing setups)
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin https://github.com/Gurbaksh363/GreenLoop.git
+              git fetch origin
+              git reset --hard origin/main
+            else
+              git fetch origin
+              git reset --hard origin/main
+            fi
 
             # 3. Build the new Docker image locally on EC2
             docker build -t greenloop-app .
