@@ -51,9 +51,11 @@ jobs:
             docker stop greenloop-container || true
             docker rm greenloop-container || true
 
-            # 5. Run the new container with SQLite persistence and port mapping
-            # This maps port 80 (standard HTTP) of EC2 to port 80 of the container.
-            # It also mounts a persistent database folder so SQLite data is never lost.
+            # 5. Fix permissions on the host volumes so the container's www-data user can write to them!
+            sudo chmod -R 777 /var/www/eco-waste-management-platform/storage
+            sudo chmod -R 777 /var/www/eco-waste-management-platform/database
+
+            # 6. Run the new container with SQLite persistence and port mapping
             docker run -d \
               -p 80:80 \
               --name greenloop-container \
