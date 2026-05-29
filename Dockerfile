@@ -34,6 +34,9 @@ WORKDIR /var/www/html
 # 7. Copy all of our local project files into the container's working folder
 COPY . .
 
+# 7.5 Install PHP dependencies (This creates the vendor/ folder!)
+RUN composer install --no-dev --optimize-autoloader
+
 # 8. Set the correct file permissions so Apache (www-data) can read/write Laravel cache & storage
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
